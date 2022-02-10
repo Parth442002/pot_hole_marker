@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import {GoogleMap,useLoadScript,Marker,InfoWindow} from '@react-google-maps/api'
+import {formatRelative} from 'date-fns'
+import "@reach/combobox/styles.css"
+
+const libraries=["places"]
+const mapContainerStyle={
+  width:'100vw',
+  height:'100vh'
+}
+const center={
+  lat: 43.6532,
+  lng: -79.3832,
+}
+const options={
+  styles={}
+}
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const {isLoaded,loadError}=useLoadScript({
+    googleMapsApiKey : "AIzaSyB9ya-AB2zslTaSGpr-BEv0yCj_UM8ptOs",
+    libraries:libraries,
+  })
+  if (loadError) return "Error Loading Maps"
+  if (!isLoaded) return "Loading Maps"
+  return(
+    <GoogleMap
+    mapContainerStyle={mapContainerStyle}
+    zoom={8}
+    center={center}
+    options={options}
+    ></GoogleMap>
+  )
 }
 
 export default App;
